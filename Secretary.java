@@ -17,7 +17,6 @@ public class Secretary extends Person {
     }
 
     public int getSalary() {
-
         return salary;
     }
     protected void setSalary(int newSalary) {
@@ -25,6 +24,13 @@ public class Secretary extends Person {
         this.salary= newSalary;
     }
 
+    /**
+     *
+     * @param p - the person that we are registering
+     * @return the new client that has been registered
+     * @throws DuplicateClientException - if the client is already registered
+     * @throws InvalidAgeException - if the client is not old enough
+     */
     public Client registerClient(Person p)  throws DuplicateClientException, InvalidAgeException {
         Client newClient = new Client(p);
         if (gym.getClients().contains(newClient))
@@ -39,10 +45,11 @@ public class Secretary extends Person {
                 return newClient;
     }
 
-    public List<Client> getClient(){
-        return gym.getClients();
-
-    }
+    /**
+     *
+     * @param c - the client that we are unregistering
+     * @throws ClientNotRegisteredException - if the client is not registered
+     */
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
         if (!gym.getClients().contains(c))
         {
@@ -50,6 +57,12 @@ public class Secretary extends Person {
         }
         gym.getClients().remove(c);
     }
+
+    public List<Client> getClient(){
+        return gym.getClients();
+
+    }
+
 
     /**
      *
@@ -66,6 +79,8 @@ public class Secretary extends Person {
         return new Instructor(p,salary,sessions);
     }
 
+
+    // registering client instance with session instance
     public void registerClientToLesson(Client client, Session currentSession) throws DuplicateClientException , ClientNotRegisteredException{
         if (currentSession.hasPlace() && currentSession.hasBalance(client) && currentSession.currectForum(client)){
 
@@ -86,6 +101,15 @@ public class Secretary extends Person {
     public void printActions() {
     }
 
+    /**
+     *
+     * @param sessionToCheck - the type of session that we are adding
+     * @param datenhour - the date and hour of the session
+     * @param forumType - the type of forum that the session is going to be
+     * @param instructor - the instructor that is going to teach the session
+     * @return the new session that has been added
+     * @throws InstructorNotQualifiedException - if the instructor is not qualified to teach the session
+     */
     public Session addSession(SessionType sessionToCheck, String datenhour, ForumType forumType, Instructor instructor) throws InstructorNotQualifiedException {
         if (!instructor.isQualified(sessionToCheck)) {
             throw new InstructorNotQualifiedException();

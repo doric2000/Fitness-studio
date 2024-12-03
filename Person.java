@@ -41,7 +41,11 @@ public class Person {
 
     public Boolean isOldEnough()
     {
+        return this.getAge() >= 18;
 
+    }
+
+    public int getAge(){
         // Define the date format
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
@@ -52,11 +56,7 @@ public class Person {
         LocalDate today = LocalDate.now();
 
         // Calculate the age
-        long age = ChronoUnit.YEARS.between(birthDate, today);
-
-        // Check if age is greater than or equal to 18
-        return age >= 18;
-
+        return (int)ChronoUnit.YEARS.between(birthDate, today);
     }
 
     public String getNotifications() {

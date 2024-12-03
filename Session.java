@@ -27,7 +27,7 @@ public class Session {
 
 
     public boolean currectForum(Client client) {
-        return (client.g)
+        return (client.)
     }
 }
 

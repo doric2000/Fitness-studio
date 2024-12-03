@@ -3,5 +3,5 @@ enum ForumType {
     Female,
     Seniors,
     Male;
-    
+
 }
