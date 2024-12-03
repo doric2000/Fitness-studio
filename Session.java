@@ -15,18 +15,19 @@ public class Session {
         this.instructor= instructor;
     }
 
+    public boolean hasPlace()
+    {
+       return (this.sType.getMaxParticipants() > registeredClients.size());
+    }
 
-}
-enum SessionType{
-    Pilates,
-    ThaiBoxing,
-    MachinePilates,
-    Ninja;
-}
-enum ForumType {
-    All,
-    Female,
-    Seniors,
-    Male;
+    public boolean hasBalance(Client client)
+    {
+        return (client.getBalance()-sType.getPrice()>0);
+    }
 
+
+    public boolean currectForum(Client client) {
+        return (client.g)
+    }
 }
+

@@ -54,20 +54,22 @@ public class Secretary extends Person {
     /**
      *
      * @param p - which person we are hiring
-     * @param i - the salary for hour for the Instructur
+     * @param salary - the salary for hour for the Instructur
      * @param sessions - Contains all sessions that can teach.
      * @return the new Instructor that has been hired.
      */
-    public Instructor hireInstructor(Person p, int i, ArrayList<SessionType> sessions)  {
-        if (p == null || i == 0 || sessions.isEmpty())
+    public Instructor hireInstructor(Person p, int salary, ArrayList<SessionType> sessions)  {
+        if (p == null || sessions.isEmpty())
         {
             return null;
         }
-        return new Instructor(p,i,sessions);
+        return new Instructor(p,salary,sessions);
     }
 
     public void registerClientToLesson(Client client, Session currentSession) throws DuplicateClientException , ClientNotRegisteredException{
-        if ()
+        if (currentSession.hasPlace() && currentSession.hasBalance(client) && currentSession.currectForum(client)){
+
+        }
 
     }
 
@@ -88,7 +90,6 @@ public class Secretary extends Person {
         if (!instructor.isQualified(sessionToCheck)) {
             throw new InstructorNotQualifiedException();
         }
-
         return new Session(sessionToCheck,datenhour,forumType,instructor);
     }
 }

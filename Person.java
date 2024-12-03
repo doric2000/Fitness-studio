@@ -23,7 +23,7 @@ public class Person {
         this.balance = p.balance;
     }
 
-    public int getId() {
+    public int getBalance() {
         return balance;
     }
 

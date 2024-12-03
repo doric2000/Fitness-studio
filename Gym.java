@@ -2,16 +2,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Gym {
-    String gymName;
-    Secretary secretary;
-    private static Gym instance;
-    private List<Client> clients;
+    String gymName; // the Name of our gym
+    Secretary secretary; // Gym's secretary
+    private static Gym instance; // Working with the Singleton principle to make sure that we have only one instance.
+    private List<Client> clients; // A list of the gym clients.
+    int balance; // gym balance , will be initialized to 0.
 
     private List<Session> Sessions;
 
     private Gym() {
         clients = new ArrayList<Client>();
-
+        balance=0;
     }
 
     public static Gym getInstance() {
