@@ -43,5 +43,9 @@ public class Session {
     public boolean isForumCorrect(Client client) {
         return fTypeStrategy.checkFType(client);
     }
+    public boolean isForumTypeGender()
+    {
+       return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
+    }
 }
 

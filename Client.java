@@ -1,6 +1,7 @@
 import java.util.Objects;
 
-public class Client extends Person{
+
+public class Client extends Person {
 
 
     public Client(Person person) {

@@ -1,7 +1,8 @@
 package gym.Exception;
 
 public class DuplicateClientException extends Exception {
-    public DuplicateClientException() {
-        System.out.println("This Client already exists.");
+    @Override
+    public String getMessage(){
+        return "Error: The client is already registered";
     }
 }

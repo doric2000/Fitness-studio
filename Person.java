@@ -7,6 +7,9 @@ public class Person {
     private int balance;
     private Gender gender;
     private String birthDate;
+    private int id=1110;
+    private static int counter =0;
+
 
     public Person(String name, int balance, Gender g , String birthDate)
     {
@@ -14,6 +17,8 @@ public class Person {
         this.balance = balance;
         this.gender = g;
         this.birthDate= birthDate;
+        this.id = id + counter;
+        counter++;
     }
     public Person(Person p)
     {
@@ -21,6 +26,7 @@ public class Person {
         this.gender = p.gender;
         this.birthDate = p.birthDate;
         this.balance = p.balance;
+        this.id = p.id;
     }
 
     public int getBalance() {

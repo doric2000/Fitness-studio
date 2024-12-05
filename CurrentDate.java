@@ -1,5 +1,7 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 
@@ -31,5 +33,30 @@ public class CurrentDate {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public String ReturnYearMonthDate(String date) {
+/*      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        String newDate;
+        try {
+            Date parsedDate1 = formatter.parse(date);
+            newDate = parsedDate1.getYear()+parsedDate1.getMonth()+parsedDate1.getDay()+" "+parsedDate1.getTime();
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }*/
+
+        // Define the input format
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        // Define the output format
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+        // Parse the input date
+        LocalDateTime dateTime = LocalDateTime.parse(date, inputFormatter);
+
+        // Format the date into the desired output format
+        String formattedDate = dateTime.format(outputFormatter);
+
+        return formattedDate;
     }
 }

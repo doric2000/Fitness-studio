@@ -1,7 +1,7 @@
 enum SessionType {
     Pilates(60, 30),
-    ThaiBoxing(80,10),
-    MachinePilates(100,20),
+    ThaiBoxing(100,20),
+    MachinePilates(80,10),
     Ninja(150,5);
 
     private final int price;

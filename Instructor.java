@@ -1,7 +1,6 @@
 import java.util.ArrayList;
-import java.util.List;
 
-public class Instructor extends Person{
+public class Instructor extends Person {
     ArrayList <SessionType> qualifiedSessions;
     int salaryPerHour;
 

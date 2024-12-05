@@ -1,7 +1,8 @@
 package gym.Exception;
 
 public class InvalidAgeException extends Exception {
-    public InvalidAgeException() {
-        System.out.println("This client is too young to subscribe to this gym");
+    @Override
+    public String getMessage(){
+        return "Error: Client must be at least 18 years old to register";
     }
 }
