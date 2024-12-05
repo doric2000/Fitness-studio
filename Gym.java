@@ -6,13 +6,15 @@ public class Gym {
     Secretary secretary; // Gym's secretary
     private static Gym instance; // Working with the Singleton principle to make sure that we have only one instance.
     private List<Client> clients; // A list of the gym clients.
-    int balance; // gym balance , will be initialized to 0.
+    private int balance; // gym balance , will be initialized to 0.
+    protected CurrentDate currentDate; // the current date of the gym
 
     private List<Session> Sessions;
 
     private Gym() {
         clients = new ArrayList<Client>();
         balance=0;
+        currentDate = CurrentDate.getInstance();
     }
 
     public static Gym getInstance() {
@@ -26,7 +28,11 @@ public class Gym {
     }
 
     public void setSecretary(Person person, int salary) {
-        secretary = new Secretary(person,salary);
+        if (this.secretary != null) {
+            this.secretary.gym = null;
+        }
+            secretary = new Secretary(person, salary);
+
     }
 
     public Secretary getSecretary() {
