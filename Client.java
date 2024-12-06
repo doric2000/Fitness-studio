@@ -1,13 +1,23 @@
+import java.util.ArrayList;
 import java.util.Objects;
+import java.util.List;
 
 
 public class Client extends Person {
+    private List<String> messageInbox;
+    private Person person;
+
 
 
     public Client(Person person) {
         super(person);
+        this.person = person;
+        messageInbox = new ArrayList<>();
     }
-
+    public Person getPerson()
+    {
+        return this.person;
+    }
 
     public StringBuilder getNotifications() {
         StringBuilder allMessages= new StringBuilder();
@@ -25,6 +35,14 @@ public class Client extends Person {
         return allMessages;
     }
 
+    public void chargeClient(int money){
+        this.addToBalance(-money);
+    }
+
+
+    public void sendMessageInbox(String message) {
+        this.messageInbox.add(message);
+    }
 
     @Override
     public boolean equals(Object o) {

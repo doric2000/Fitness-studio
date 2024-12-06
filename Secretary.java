@@ -9,22 +9,24 @@ import java.util.List;
 public class Secretary extends Person {
     int salary;
     Gym gym;
+    Person person;
 
     public Secretary(Person p, int salary) {
         super(p);
+        this.person=p;
         this.salary = salary;
         this.gym = Gym.getInstance();
         gym.addHistoryLog("A new secretary has started working at the gym: " + p.getName());
     }
 
-//    public Secretary(Secretary s, Person person){
-//        s.gym =
-//        this.salary = s.salary;
-//        this.gym = s.gym;
-//    }
 
     public int getSalary() {
         return salary;
+    }
+
+    public Person getPerson()
+    {
+        return this.person;
     }
 
     protected void setSalary(int newSalary) {
@@ -85,7 +87,10 @@ public class Secretary extends Person {
         if (p == null || sessions.isEmpty()) {
             return null;
         }
-        return new Instructor(p,salary,sessions);
+        gym.addHistoryLog("Hired new instructor: " + p.getName() + " with salary per hour: " + salary);
+        Instructor newInstructor = new Instructor(p, salary, sessions);
+        gym.getInstructors().add(newInstructor);
+        return newInstructor;
     }
 
 
@@ -98,7 +103,9 @@ public class Secretary extends Person {
      * @throws ClientNotRegisteredException - if the client is not registered
      */
     public void registerClientToLesson(Client client, Session currentSession) throws DuplicateClientException, ClientNotRegisteredException {
+        boolean errorFlag = false;
         CurrentDate cDate = gym.currentDate;
+
         // check if the client is even a registered client
         if (!gym.getClients().contains(client)) {
             throw new ClientNotRegisteredException("Error: The client is not registered with the gym and cannot enroll in lessons");
@@ -144,19 +151,55 @@ public class Secretary extends Person {
     }
 
 
-    public void notify(Session s4, String s) {
+    public void notify(Session session, String message) {
+        List<Client> clientsList = session.getRegisteredClients();
+        for (Client i : clientsList )
+        {
+            i.sendMessageInbox(message);
+        }
+        gym.addHistoryLog("A message was sent to everyone registered for session ThaiBoxing on " + session.getDateForPrinting() + " : " +message);
     }
 
-    public void notify(String s4, String s) {
+    public void notify(String date, String warningMessage) {
+        List<Client> clientsList = gym.getClients();
+        for (Session s : gym.getSessions()) {
+            for (Client i : clientsList) {
+                if (s.getDate().contains(date)) {
+                    i.sendMessageInbox(warningMessage);
+                }
+            }
+        }
+        gym.addHistoryLog("A message was sent to everyone registered for a session on " + CurrentDate.getInstance().ReturnDateReversedNohour(date) + " : "+warningMessage);
+
+
     }
 
-    public void notify(String s) {
+    public void notify(String message) {
+        List<Client> clientsList = gym.getClients();
+        for (Client i : clientsList )
+        {
+            i.sendMessageInbox(message);
+        }
+        gym.addHistoryLog("A message was sent to all gym clients: "+message);
+
     }
 
     public void paySalaries() {
+//         secretary payment
+        this.addToBalance(this.salary);
+        List<Session> allSessions = gym.getSessions();
+        for (Session s : allSessions) {
+            // god pays them money
+            s.getInstructor().getPerson().addToBalance(s.getInstructor().getSalaryPerHour());
+        }
+        gym.addHistoryLog("Salaries have been paid to all employees");
     }
 
     public void printActions() {
+        List<String> actionsLog = gym.getHistoryLog();
+        for (String str : actionsLog) {
+            System.out.println(str);
+        }
     }
 
     /**
@@ -170,9 +213,19 @@ public class Secretary extends Person {
      * @throws InstructorNotQualifiedException - if the instructor is not qualified to teach the session
      */
     public Session addSession(SessionType sessionToCheck, String dateNHour, ForumType forumType, Instructor instructor) throws InstructorNotQualifiedException {
+        CurrentDate dateFormatter = CurrentDate.getInstance();
+        String dateNHour2 = dateFormatter.YearMonthDateHHmm(dateNHour).replace(" ", "T");
         if (!instructor.isQualified(sessionToCheck)) {
             throw new InstructorNotQualifiedException();
         }
-        return new Session(sessionToCheck, dateNHour,forumType,instructor);
+        gym.addHistoryLog("Created new session: " + sessionToCheck.name() + " on " + dateNHour2 + " with instructor: " + instructor.getName());
+        Session newSession = new Session(sessionToCheck, dateNHour, forumType, instructor);
+        gym.getSessions().add(newSession);
+        return newSession;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " | Role: Secretary | Salary per Month: "+this.salary;
     }
 }

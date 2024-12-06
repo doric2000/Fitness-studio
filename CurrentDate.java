@@ -7,9 +7,11 @@ import java.util.Date;
 
 public class CurrentDate {
     private static CurrentDate instance = new CurrentDate();
-    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");;
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+    ;
 
-    private CurrentDate() {}
+    private CurrentDate() {
+    }
 
     public static CurrentDate getInstance() {
         return instance;
@@ -35,15 +37,7 @@ public class CurrentDate {
         }
     }
 
-    public String ReturnYearMonthDate(String date) {
-/*      SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        String newDate;
-        try {
-            Date parsedDate1 = formatter.parse(date);
-            newDate = parsedDate1.getYear()+parsedDate1.getMonth()+parsedDate1.getDay()+" "+parsedDate1.getTime();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }*/
+    public String YearMonthDateHHmm(String date) {
 
         // Define the input format
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
@@ -55,9 +49,8 @@ public class CurrentDate {
         LocalDateTime dateTime = LocalDateTime.parse(date, inputFormatter);
 
         // Format the date into the desired output format
-        String formattedDate = dateTime.format(outputFormatter);
 
-        return formattedDate;
+        return dateTime.format(outputFormatter);
     }
 
     public String ReturnDateReversedNohour(String date) {

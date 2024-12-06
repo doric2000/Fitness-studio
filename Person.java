@@ -4,17 +4,17 @@ import java.time.temporal.ChronoUnit;
 
 public class Person {
     private String name;
-    private int balance;
     private Gender gender;
     private String birthDate;
-    private int id=1110;
+    private int id=1111;
     private static int counter =0;
+    private Balance balance;
 
 
     public Person(String name, int balance, Gender g , String birthDate)
     {
         this.name=name;
-        this.balance = balance;
+        this.balance = new Balance(balance);
         this.gender = g;
         this.birthDate= birthDate;
         this.id = id + counter;
@@ -30,11 +30,11 @@ public class Person {
     }
 
     public int getBalance() {
-        return balance;
+        return this.balance.getAmount();
     }
 
     protected void addToBalance(int balance){
-        this.balance += balance;
+        this.balance.addAmount(balance);
     }
 
     public String getBirthDate() {
@@ -66,7 +66,7 @@ public class Person {
         LocalDate today = LocalDate.now();
 
         // Calculate the age
-        return (int)ChronoUnit.YEARS.between(birthDate, today);
+        return (today.getYear()-birthDate.getYear());
     }
 
     public StringBuilder getNotifications() {
@@ -76,7 +76,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "ID: " + this.id +" | Name: " + this.name + " | Gender: " + this.getGender() + " | Birthday: " + this.birthDate + " | Age: " + this.getAge() + " | Balance: " + this.balance;
+        return "ID: " + this.id +" | Name: " + this.name + " | Gender: " + this.getGender() + " | Birthday: " + this.birthDate + " | Age: " + this.getAge() + " | Balance: " + this.getBalance();
 
     }
 }

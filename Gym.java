@@ -9,6 +9,7 @@ public class Gym {
     private List<Instructor> instructors;
     private int balance; // gym balance , will be initialized to 0. The secretary salary will not affect the balance.
     protected CurrentDate currentDate; // the current date of the gym
+    private List<String> historyLog;
 
     private List<Session> sessions;
 
@@ -17,6 +18,17 @@ public class Gym {
         instructors = new ArrayList<>();
         balance = 0;
         currentDate = CurrentDate.getInstance();
+        historyLog = new ArrayList<>();
+        sessions = new ArrayList<>();
+    }
+
+    public void addBalance(int money) {
+        balance += money;
+    }
+
+    public List<Session> getSessions()
+    {
+        return sessions;
     }
 
     public static Gym getInstance() {
@@ -35,6 +47,14 @@ public class Gym {
         }
             secretary = new Secretary(person, salary);
 
+    }
+
+    public void addHistoryLog(String text){
+        historyLog.add(text);
+    }
+
+    public List<String> getHistoryLog(){
+        return historyLog;
     }
 
     public Secretary getSecretary() {
