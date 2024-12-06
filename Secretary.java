@@ -43,7 +43,7 @@ public class Secretary extends Person {
     public Client registerClient(Person p) throws DuplicateClientException, InvalidAgeException {
         Client newClient = new Client(p);
         if (gym.getClients().contains(newClient)) {
-            throw new DuplicateClientException();
+            throw new DuplicateClientException("Error: The client is already registered");
         }
         if (!newClient.isOldEnough()) {
             throw new InvalidAgeException();
@@ -61,8 +61,9 @@ public class Secretary extends Person {
      */
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
         if (!gym.getClients().contains(c)) {
-            throw new ClientNotRegisteredException();
+            throw new ClientNotRegisteredException("Error: Registration is required before attempting to unregister");
         }
+        gym.addHistoryLog("Unregistered client: " + c.getName());
         gym.getClients().remove(c);
     }
 
@@ -100,30 +101,45 @@ public class Secretary extends Person {
         CurrentDate cDate = gym.currentDate;
         // check if the client is even a registered client
         if (!gym.getClients().contains(client)) {
-            throw new ClientNotRegisteredException();
+            throw new ClientNotRegisteredException("Error: The client is not registered with the gym and cannot enroll in lessons");
         }
         // check if the client is qualified to register to the session by checking if he has enough balance, if the session has place and if he is in the right forum
-        else if (!currentSession.hasPlace()) {
+        if (!currentSession.hasPlace()) {
             gym.addHistoryLog("Failed registration: No available spots for session");
-        } else if (!currentSession.hasBalance(client)) {
-            gym.addHistoryLog("Failed registration: Client doesn't have enough balance");
-        } else if (!currentSession.isForumCorrect(client)) {
-            if (currentSession.isForumTypeGender())
-                gym.addHistoryLog("Failed registration: Client's gender doesn't match the session's gender requirements");
-            else {
-                gym.addHistoryLog("Failed registration: Client doesn't meet the age requirements for this session (" + currentSession.getForumTypeString() + ")");
-            }
+            errorFlag=true;
         }
         // check if the session date is not expired
-        else if (cDate.isExpiredDate(currentSession.getDate())) {
+        if (cDate.isExpiredDate(currentSession.getDate())) {
             gym.addHistoryLog("Failed registration: Session is not in the future");
-        } else if (currentSession.isRegistered(client)) {
-            throw new DuplicateClientException();
-        } else {
-            currentSession.registerClient(client);
-            CurrentDate dateFormatter = CurrentDate.getInstance();
-            String sessionDate = dateFormatter.ReturnYearMonthDate(currentSession.getDate()).replace(" ", "T");
-            gym.addHistoryLog("Registered client: " + client.getName() + " to session: " + currentSession.getSessionTypeString() + " on " + sessionDate + " for price: "+currentSession.getSessionPrice());
+            errorFlag=true;
+        }
+
+        if (!currentSession.isForumCorrect(client)) {
+            if (currentSession.isForumTypeGender()) {
+                gym.addHistoryLog("Failed registration: Client's gender doesn't match the session's gender requirements");
+                errorFlag = true;
+            }
+            else {
+                gym.addHistoryLog("Failed registration: Client doesn't meet the age requirements for this session (" + currentSession.getForumTypeString() + ")");
+                errorFlag=true;
+            }
+        }
+        //checking if client doesn't have enough money after checking if he can fill all the requirements
+        if (!currentSession.hasBalance(client)) {
+            gym.addHistoryLog("Failed registration: Client doesn't have enough balance");
+            errorFlag=true;
+        }
+        if (currentSession.isRegistered(client)) {
+            throw new DuplicateClientException("Error: The client is already registered for this lesson");
+        }
+        if (!errorFlag){
+                // add the money to gym balance
+                gym.addBalance(currentSession.getPrice());
+                // charge the client with the set amount of the current session
+                client.chargeClient(currentSession.getPrice());
+                currentSession.registerClient(client);
+                gym.addHistoryLog("Registered client: " + client.getName() + " to session: " + currentSession.getSessionTypeString() + " on " + currentSession.getDateForPrinting() + " for price: " + currentSession.getPrice());
+
         }
     }
 

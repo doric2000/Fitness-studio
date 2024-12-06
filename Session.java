@@ -18,12 +18,47 @@ public class Session {
         fTypeStrategy = fType.getStrategy();
     }
 
+    public Session(Session session){
+        this.sType = session.sType;
+        this.date = session.date;
+        this.fType =  session.fType;
+        this.instructor = session.instructor;
+    }
+
+    public String getForumTypeString(){
+        return fType.name();
+    }
+
+    public int getPrice(){
+        return sType.getPrice();
+    }
+
+    public Instructor getInstructor(){
+        return this.instructor;
+    }
+
+    public String getSessionTypeString(){
+
+        return sType.name();
+    }
     public String getDate(){
         return this.date;
     }
 
+    public String getDateForPrinting(){
+        // create a date instance
+        CurrentDate dateFormatter = CurrentDate.getInstance();
+        // reformat date string to YYYY-MM-DDTHH:MM
+        return dateFormatter.YearMonthDateHHmm(this.getDate()).replace(" ", "T");
+    }
+
     public void registerClient(Client client) {
+
         registeredClients.add(client);
+    }
+    public List<Client> getRegisteredClients()
+    {
+        return registeredClients;
     }
     public boolean isRegistered(Client client) {
         return registeredClients.contains(client);
@@ -46,6 +81,12 @@ public class Session {
     public boolean isForumTypeGender()
     {
        return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
+    }
+
+    @Override
+    public String toString() {
+        return "Session Type: " + this.sType.name() +" | Date: " + this.date + " | Forum: " + this.fType.name() + " | Instructor: " + this.instructor.getName() + " | Participants: " + this.registeredClients.size() + "/" + this.sType.getMaxParticipants();
+
     }
 }
 

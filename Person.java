@@ -33,6 +33,10 @@ public class Person {
         return balance;
     }
 
+    protected void addToBalance(int balance){
+        this.balance += balance;
+    }
+
     public String getBirthDate() {
         return birthDate;
     }
@@ -65,7 +69,14 @@ public class Person {
         return (int)ChronoUnit.YEARS.between(birthDate, today);
     }
 
-    public String getNotifications() {
-        return "die bitch";
+    public StringBuilder getNotifications() {
+        return null;
+
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + this.id +" | Name: " + this.name + " | Gender: " + this.getGender() + " | Birthday: " + this.birthDate + " | Age: " + this.getAge() + " | Balance: " + this.balance;
+
     }
 }

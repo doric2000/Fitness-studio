@@ -59,4 +59,25 @@ public class CurrentDate {
 
         return formattedDate;
     }
+
+    public String ReturnDateReversedNohour(String date) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
+
+            // Define the desired output date format
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            // Parse the input date string into a Date object
+            Date newdate = inputFormat.parse(date);
+
+            // Format the Date object into the desired output format
+            return outputFormat.format(newdate);
+        } catch (ParseException e) {
+            // Handle error if the input date format is invalid
+            System.err.println("Invalid date format: " + date);
+            return null;
+        }
+    }
+
+
 }
