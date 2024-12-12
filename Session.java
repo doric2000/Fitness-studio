@@ -9,6 +9,8 @@ public class Session {
     private List<Client> registeredClients;
     private ForumTypeStrategy fTypeStrategy;
 
+    private List<EventListener> observers = new ArrayList<>();
+
     public Session(SessionType sType, String date, ForumType fType, Instructor instructor) {
         this.sType = sType;
         this.date = date;
@@ -81,6 +83,10 @@ public class Session {
     public boolean isForumTypeGender()
     {
        return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
+    }
+
+    public void registerObserver(EventListener o) {
+        observers.add(o);
     }
 
     @Override

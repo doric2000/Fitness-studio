@@ -145,6 +145,7 @@ public class Secretary extends Person {
                 // charge the client with the set amount of the current session
                 client.chargeClient(currentSession.getPrice());
                 currentSession.registerClient(client);
+                NotificationService
                 gym.addHistoryLog("Registered client: " + client.getName() + " to session: " + currentSession.getSessionTypeString() + " on " + currentSession.getDateForPrinting() + " for price: " + currentSession.getPrice());
 
         }

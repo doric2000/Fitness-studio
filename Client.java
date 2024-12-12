@@ -3,7 +3,7 @@ import java.util.Objects;
 import java.util.List;
 
 
-public class Client extends Person {
+public class Client extends Person implements EventListener {
     private List<String> messageInbox;
     private Person person;
 
@@ -51,4 +51,8 @@ public class Client extends Person {
         return this.getBalance() == client.getBalance() && Objects.equals(this.getName(), client.getName()) && Objects.equals(this.getBirthDate(), client.getBirthDate());
     }
 
+    @Override
+    public void update(String message) {
+        this.sendMessageInbox(message);
+    }
 }
