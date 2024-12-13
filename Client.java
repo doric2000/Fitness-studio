@@ -3,7 +3,7 @@ import java.util.Objects;
 import java.util.List;
 
 
-public class Client extends Person implements EventListener {
+public class Client extends Person implements Observer {
     private List<String> messageInbox;
     private Person person;
 
@@ -53,6 +53,6 @@ public class Client extends Person implements EventListener {
 
     @Override
     public void update(String message) {
-        this.sendMessageInbox(message);
+        this.messageInbox.add(message);
     }
 }

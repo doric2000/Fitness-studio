@@ -7,15 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Secretary extends Person {
-    int salary;
-    Gym gym;
-    Person person;
+    private int salary;
+    protected Gym gym;
+    private Person person;
+    private NotificationService notificationService;
 
     public Secretary(Person p, int salary) {
         super(p);
         this.person=p;
         this.salary = salary;
         this.gym = Gym.getInstance();
+        this.notificationService = new NotificationService(this.gym);
         gym.addHistoryLog("A new secretary has started working at the gym: " + p.getName());
     }
 
@@ -145,24 +147,25 @@ public class Secretary extends Person {
                 // charge the client with the set amount of the current session
                 client.chargeClient(currentSession.getPrice());
                 currentSession.registerClient(client);
-                NotificationService
-                gym.addHistoryLog("Registered client: " + client.getName() + " to session: " + currentSession.getSessionTypeString() + " on " + currentSession.getDateForPrinting() + " for price: " + currentSession.getPrice());
+                gym.addHistoryLog("Registered client: " + client.getName() + " to session: " + currentSession.getSessionTypeString() + " on " + currentSession.getDateString() + " for price: " + currentSession.getPrice());
 
         }
     }
 
 
     public void notify(Session session, String message) {
-        List<Client> clientsList = session.getRegisteredClients();
+/*        List<Client> clientsList = session.getRegisteredClients();
         for (Client i : clientsList )
         {
             i.sendMessageInbox(message);
-        }
-        gym.addHistoryLog("A message was sent to everyone registered for session ThaiBoxing on " + session.getDateForPrinting() + " : " +message);
+        }*/
+//        session.notifyObservers(message);
+//        gym.addHistoryLog("A message was sent to everyone registered for session "+session.getSessionTypeString()+" on " + session.getDateForPrinting() + " : " +message);
+        notificationService.notify(session,message);
     }
 
     public void notify(String date, String warningMessage) {
-        List<Client> clientsList = gym.getClients();
+/*        List<Client> clientsList = gym.getClients();
         for (Session s : gym.getSessions()) {
             for (Client i : clientsList) {
                 if (s.getDate().contains(date)) {
@@ -170,28 +173,29 @@ public class Secretary extends Person {
                 }
             }
         }
-        gym.addHistoryLog("A message was sent to everyone registered for a session on " + CurrentDate.getInstance().ReturnDateReversedNohour(date) + " : "+warningMessage);
-
+        gym.addHistoryLog("A message was sent to everyone registered for a session on " + CurrentDate.getInstance().ReturnDateReversedNohour(date) + " : "+warningMessage);*/
+        notificationService.notify(date,warningMessage);
 
     }
 
     public void notify(String message) {
-        List<Client> clientsList = gym.getClients();
-        for (Client i : clientsList )
-        {
-            i.sendMessageInbox(message);
-        }
-        gym.addHistoryLog("A message was sent to all gym clients: "+message);
-
+//        List<Client> clientsList = gym.getClients();
+//        for (Client i : clientsList )
+//        {
+//            i.sendMessageInbox(message);
+//        }
+//        gym.addHistoryLog("A message was sent to all gym clients: "+message);
+        notificationService.notify(message);
     }
 
     public void paySalaries() {
 //         secretary payment
         this.addToBalance(this.salary);
+        gym.addBalance(-this.salary);
         List<Session> allSessions = gym.getSessions();
         for (Session s : allSessions) {
-            // god pays them money
             s.getInstructor().getPerson().addToBalance(s.getInstructor().getSalaryPerHour());
+            gym.addBalance(-s.getInstructor().getSalaryPerHour());
         }
         gym.addHistoryLog("Salaries have been paid to all employees");
     }

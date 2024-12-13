@@ -8,8 +8,7 @@ public class Session {
     private Instructor instructor;
     private List<Client> registeredClients;
     private ForumTypeStrategy fTypeStrategy;
-
-    private List<EventListener> observers = new ArrayList<>();
+    private List<Observer> observers;
 
     public Session(SessionType sType, String date, ForumType fType, Instructor instructor) {
         this.sType = sType;
@@ -18,6 +17,7 @@ public class Session {
         this.instructor = instructor;
         registeredClients = new ArrayList<Client>();
         fTypeStrategy = fType.getStrategy();
+        observers  = new ArrayList<>();
     }
 
     public Session(Session session){
@@ -47,7 +47,7 @@ public class Session {
         return this.date;
     }
 
-    public String getDateForPrinting(){
+    public String getDateString(){
         // create a date instance
         CurrentDate dateFormatter = CurrentDate.getInstance();
         // reformat date string to YYYY-MM-DDTHH:MM
@@ -55,8 +55,9 @@ public class Session {
     }
 
     public void registerClient(Client client) {
-
+        observers.add(client);
         registeredClients.add(client);
+
     }
     public List<Client> getRegisteredClients()
     {
@@ -85,8 +86,20 @@ public class Session {
        return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
     }
 
-    public void registerObserver(EventListener o) {
+    public void registerObserver (Observer o) {
         observers.add(o);
+    }
+
+    public void removeObserver (Observer o) {
+        observers.remove(o);
+    }
+
+    public void notifyObservers(String message)
+    {
+        for (Observer observer : observers)
+        {
+            observer.update(message);
+        }
     }
 
     @Override

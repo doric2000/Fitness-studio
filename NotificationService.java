@@ -1,22 +1,33 @@
-import java.util.ArrayList;
+// NotificationService.java
+import java.util.List;
 
 public class NotificationService {
-    private ArrayList<EventListener> observers;
-    public NotificationService(){
-        observers = new ArrayList<>();
+    private Gym gym;
+
+    public NotificationService(Gym gym) {
+        this.gym = gym;
     }
 
-    public void subscribe(EventListener o){
-        observers.add(o);
+    public void notify(Session session, String message) {
+        session.notifyObservers(message);
+        gym.addHistoryLog("A message was sent to everyone registered for session " + session.getSessionTypeString() + " on " + session.getDateString() + " : " + message);
     }
 
-    public void unsubscribe(EventListener o){
-        observers.remove(o);
-    }
-
-    public void notifyObservers(String message){
-        for (EventListener listener : observers){
-            listener.update(message);
+    public void notify(String date, String warningMessage) {
+        for (Session session : gym.getSessions()) {
+            if (session.getDate().contains(date)) {
+                session.notifyObservers(warningMessage);
+            }
         }
+        gym.addHistoryLog("A message was sent to everyone registered for a session on " + CurrentDate.getInstance().ReturnDateReversedNohour(date) + " : " + warningMessage);
+    }
+
+    public void notify(String message) {
+        List<Client> clientsList = gym.getClients();
+        for (Client i : clientsList )
+        {
+            i.sendMessageInbox(message);
+        }
+        gym.addHistoryLog("A message was sent to all gym clients: " + message);
     }
 }
