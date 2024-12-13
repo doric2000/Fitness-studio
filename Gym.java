@@ -91,7 +91,12 @@ public class Gym {
         all.append("\n");
         all.append("Sessions Data:" + "\n");
         for (int i = 0; i < this.sessions.size(); i++) {
-            all.append(sessions.get(i).toString()).append("\n");
+            if (i == this.sessions.size()-1 )
+                all.append(sessions.get(i).toString());
+            else {
+                all.append(sessions.get(i).toString()).append("\n");
+            }
+
         }
 
 
