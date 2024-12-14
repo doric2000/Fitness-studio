@@ -45,8 +45,7 @@ public class Gym {
         if (this.secretary != null) {
             this.secretary.gym = null;
         }
-            secretary = new Secretary(person, salary);
-
+        secretary = PersonFactory.createSecretary(person,salary);
     }
 
     public void addHistoryLog(String text){
