@@ -153,37 +153,15 @@ public class Secretary extends Person {
 
 
     public void notify(Session session, String message) {
-/*        List<Client> clientsList = session.getRegisteredClients();
-        for (Client i : clientsList )
-        {
-            i.sendMessageInbox(message);
-        }*/
-//        session.notifyObservers(message);
-//        gym.addHistoryLog("A message was sent to everyone registered for session "+session.getSessionTypeString()+" on " + session.getDateForPrinting() + " : " +message);
         notificationService.notify(session,message);
     }
 
     public void notify(String date, String warningMessage) {
-/*        List<Client> clientsList = gym.getClients();
-        for (Session s : gym.getSessions()) {
-            for (Client i : clientsList) {
-                if (s.getDate().contains(date)) {
-                    i.sendMessageInbox(warningMessage);
-                }
-            }
-        }
-        gym.addHistoryLog("A message was sent to everyone registered for a session on " + CurrentDate.getInstance().ReturnDateReversedNohour(date) + " : "+warningMessage);*/
         notificationService.notify(date,warningMessage);
 
     }
 
     public void notify(String message) {
-//        List<Client> clientsList = gym.getClients();
-//        for (Client i : clientsList )
-//        {
-//            i.sendMessageInbox(message);
-//        }
-//        gym.addHistoryLog("A message was sent to all gym clients: "+message);
         notificationService.notify(message);
     }
 
@@ -222,6 +200,8 @@ public class Secretary extends Person {
             throw new InstructorNotQualifiedException();
         }
         gym.addHistoryLog("Created new session: " + sessionToCheck.name() + " on " + dateNHour2 + " with instructor: " + instructor.getName());
+        // here we will have to implement our Factory
+
         Session newSession = new Session(sessionToCheck, dateNHour, forumType, instructor);
         gym.getSessions().add(newSession);
         return newSession;
