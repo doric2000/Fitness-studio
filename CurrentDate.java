@@ -8,9 +8,6 @@ import java.util.Date;
 
 
 public class CurrentDate {
-    private static CurrentDate instance;
-    private final SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-    ;
 
 
     // Returns the current date in the format dd-MM-yyyy HH:mm

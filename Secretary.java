@@ -45,7 +45,7 @@ public class Secretary extends Person {
      * @throws InvalidAgeException      - if the client is not old enough
      */
     public Client registerClient(Person p) throws DuplicateClientException, InvalidAgeException {
-        Client newClient = PersonFactory.createClient(p);
+        Client newClient = new Client(p);
         if (gym.getClients().contains(newClient)) {
             throw new DuplicateClientException("Error: The client is already registered");
         }
@@ -90,7 +90,7 @@ public class Secretary extends Person {
             return null;
         }
         gym.addHistoryLog("Hired new instructor: " + p.getName() + " with salary per hour: " + salary);
-        Instructor newInstructor = PersonFactory.createInstructor(p,salary, sessions);
+        Instructor newInstructor = new Instructor(p,salary, sessions);
         gym.getInstructors().add(newInstructor);
         return newInstructor;
     }
