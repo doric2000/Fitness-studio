@@ -8,7 +8,6 @@ public class Gym {
     private List<Client> clients; // A list of the gym clients.
     private List<Instructor> instructors;
     private int balance; // gym balance , will be initialized to 0. The secretary salary will not affect the balance.
-    protected CurrentDate currentDate; // the current date of the gym
     private List<String> historyLog;
 
     private List<Session> sessions;
@@ -17,7 +16,6 @@ public class Gym {
         clients = new ArrayList<>();
         instructors = new ArrayList<>();
         balance = 0;
-        currentDate = CurrentDate.getInstance();
         historyLog = new ArrayList<>();
         sessions = new ArrayList<>();
     }

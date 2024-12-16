@@ -1,6 +1,8 @@
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+import java.time.Period;
+
 
 public class Person {
     private String name;
@@ -56,17 +58,8 @@ public class Person {
     }
 
     public int getAge(){
-        // Define the date format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-        // Parse the birthdate string into a LocalDate
-        LocalDate birthDate = LocalDate.parse(this.birthDate, formatter);
-
-        // Get today's date
-        LocalDate today = LocalDate.now();
-
-        // Calculate the age
-        return (today.getYear()-birthDate.getYear());
+        return CurrentDate.getAge(this.birthDate);
     }
 
     public StringBuilder getNotifications() {

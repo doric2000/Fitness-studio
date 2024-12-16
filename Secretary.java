@@ -106,7 +106,6 @@ public class Secretary extends Person {
      */
     public void registerClientToLesson(Client client, Session currentSession) throws DuplicateClientException, ClientNotRegisteredException {
         boolean errorFlag = false;
-        CurrentDate cDate = gym.currentDate;
 
         // check if the client is even a registered client
         if (!gym.getClients().contains(client)) {
@@ -118,7 +117,7 @@ public class Secretary extends Person {
             errorFlag=true;
         }
         // check if the session date is not expired
-        if (cDate.isExpiredDate(currentSession.getDate())) {
+        if (CurrentDate.isExpiredDate(currentSession.getDate())) {
             gym.addHistoryLog("Failed registration: Session is not in the future");
             errorFlag=true;
         }
@@ -218,8 +217,7 @@ public class Secretary extends Person {
      * @throws InstructorNotQualifiedException - if the instructor is not qualified to teach the session
      */
     public Session addSession(SessionType sessionToCheck, String dateNHour, ForumType forumType, Instructor instructor) throws InstructorNotQualifiedException {
-        CurrentDate dateFormatter = CurrentDate.getInstance();
-        String dateNHour2 = dateFormatter.YearMonthDateHHmm(dateNHour).replace(" ", "T");
+        String dateNHour2 = CurrentDate.YearMonthDateHHmm(dateNHour).replace(" ", "T");
         if (!instructor.isQualified(sessionToCheck)) {
             throw new InstructorNotQualifiedException();
         }

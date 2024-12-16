@@ -19,7 +19,7 @@ public class NotificationService {
                 session.notifyObservers(warningMessage);
             }
         }
-        gym.addHistoryLog("A message was sent to everyone registered for a session on " + CurrentDate.getInstance().ReturnDateReversedNohour(date) + " : " + warningMessage);
+        gym.addHistoryLog("A message was sent to everyone registered for a session on " + CurrentDate.ReturnDateReversedNohour(date) + " : " + warningMessage);
     }
 
     public void notify(String message) {

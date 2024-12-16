@@ -49,9 +49,8 @@ public class Session {
 
     public String getDateString(){
         // create a date instance
-        CurrentDate dateFormatter = CurrentDate.getInstance();
         // reformat date string to YYYY-MM-DDTHH:MM
-        return dateFormatter.YearMonthDateHHmm(this.getDate()).replace(" ", "T");
+        return CurrentDate.YearMonthDateHHmm(this.getDate()).replace(" ", "T");
     }
 
     public void registerClient(Client client) {
