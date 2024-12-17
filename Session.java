@@ -54,13 +54,6 @@ public interface Session {
         public void registerClient(Client client);
 
         /**
-         * Retrieves the list of clients registered for the session.
-         *
-         * @return A list of Client objects who are registered for the session.
-         */
-        public List<Client> getRegisteredClients();
-
-        /**
          * Checks if a given client is already registered for the session.
          *
          * @param client The Client to check.
@@ -98,21 +91,6 @@ public interface Session {
          * @return True if the forum type is gender-based, false otherwise.
          */
         public boolean isForumTypeGender();
-
-        /**
-         * Registers an observer to the session.
-         * Observers are notified of updates related to the session.
-         *
-         * @param o The Observer to register.
-         */
-        public void registerObserver(Observer o);
-
-        /**
-         * Removes an observer from the session.
-         *
-         * @param o The Observer to remove.
-         */
-        public void removeObserver(Observer o);
 
         /**
          * Notifies all registered observers with a given message.

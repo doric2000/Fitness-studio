@@ -99,15 +99,6 @@ public class ThaiBoxingSession implements Session {
     }
 
     /**
-     * Retrieves a list of all registered clients.
-     *
-     * @return A list of registered Client objects.
-     */
-    public List<Client> getRegisteredClients() {
-        return registeredClients;
-    }
-
-    /**
      * Checks if a client is already registered for the session.
      *
      * @param client The Client to check.
@@ -153,24 +144,6 @@ public class ThaiBoxingSession implements Session {
      */
     public boolean isForumTypeGender() {
         return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
-    }
-
-    /**
-     * Registers an observer for the session.
-     *
-     * @param o The Observer to register.
-     */
-    public void registerObserver(Observer o) {
-        observers.add(o);
-    }
-
-    /**
-     * Removes an observer from the session.
-     *
-     * @param o The Observer to remove.
-     */
-    public void removeObserver(Observer o) {
-        observers.remove(o);
     }
 
     /**

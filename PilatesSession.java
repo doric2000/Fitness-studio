@@ -94,15 +94,6 @@ public class PilatesSession implements Session {
     }
 
     /**
-     * Retrieves a list of all clients registered for the session.
-     *
-     * @return A list of registered clients.
-     */
-    public List<Client> getRegisteredClients() {
-        return registeredClients;
-    }
-
-    /**
      * Checks if a client is already registered for the session.
      *
      * @param client The client to check.
@@ -148,24 +139,6 @@ public class PilatesSession implements Session {
      */
     public boolean isForumTypeGender() {
         return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
-    }
-
-    /**
-     * Registers an observer for session notifications.
-     *
-     * @param o The Observer to register.
-     */
-    public void registerObserver(Observer o) {
-        observers.add(o);
-    }
-
-    /**
-     * Removes an observer from session notifications.
-     *
-     * @param o The Observer to remove.
-     */
-    public void removeObserver(Observer o) {
-        observers.remove(o);
     }
 
     /**

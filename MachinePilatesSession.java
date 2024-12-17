@@ -55,10 +55,6 @@ public class MachinePilatesSession implements Session{
         registeredClients.add(client);
 
     }
-    public List<Client> getRegisteredClients()
-    {
-        return registeredClients;
-    }
     public boolean isRegistered(Client client) {
         return registeredClients.contains(client);
     }
@@ -81,15 +77,6 @@ public class MachinePilatesSession implements Session{
     {
         return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
     }
-
-    public void registerObserver (Observer o) {
-        observers.add(o);
-    }
-
-    public void removeObserver (Observer o) {
-        observers.remove(o);
-    }
-
     public void notifyObservers(String message)
     {
         for (Observer observer : observers)
