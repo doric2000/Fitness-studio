@@ -6,6 +6,11 @@ import gym.Exception.InvalidAgeException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Secretary class represents a staff member responsible for managing clients, instructors,
+ * sessions, and other gym operations.
+ * It extends the Person class and interacts with the Gym singleton instance.
+ */
 public class Secretary extends Person {
     private int salary;
     protected Gym gym;
@@ -14,6 +19,12 @@ public class Secretary extends Person {
 
     private SessionFactory sessionFactory;
 
+    /**
+     * Constructs a new Secretary with a given person object and salary.
+     *
+     * @param p      The Person object representing the secretary.
+     * @param salary The monthly salary of the secretary.
+     */
     public Secretary(Person p, int salary) {
         super(p);
         this.person=p;
@@ -25,12 +36,12 @@ public class Secretary extends Person {
     }
 
     /**
-     * This method is used to register a client
+     * Registers a client in the gym system.
      *
-     * @param p - the person that we are registering
-     * @return the new client that has been registered
-     * @throws DuplicateClientException - if the client is already registered
-     * @throws InvalidAgeException      - if the client is not old enough
+     * @param p The person to be registered as a client.
+     * @return A newly registered Client object.
+     * @throws DuplicateClientException If the client is already registered.
+     * @throws InvalidAgeException      If the client does not meet the age requirement.
      */
     public Client registerClient(Person p) throws DuplicateClientException, InvalidAgeException {
         Client newClient = new Client(p);
@@ -46,10 +57,10 @@ public class Secretary extends Person {
     }
 
     /**
-     * This method is used to unregister a client
+     * Unregisters a client from the gym system.
      *
-     * @param c - the client that we are unregistering
-     * @throws ClientNotRegisteredException - if the client is not registered
+     * @param c The Client to be unregistered.
+     * @throws ClientNotRegisteredException If the client is not registered.
      */
     public void unregisterClient(Client c) throws ClientNotRegisteredException {
         if (!gym.getClients().contains(c)) {
@@ -59,19 +70,23 @@ public class Secretary extends Person {
         gym.getClients().remove(c);
     }
 
+    /**
+     * Retrieves a list of all registered clients.
+     *
+     * @return A List of Client objects.
+     */
     public List<Client> getClient() {
         return gym.getClients();
-
     }
 
 
     /**
-     * This method is used to hire an instructor
+     * Hires a new instructor with a given salary and session types they can teach.
      *
-     * @param p        - which person we are hiring
-     * @param salary   - the salary for hour for the Instructur
-     * @param sessions - Contains all sessions that can teach.
-     * @return the new Instructor that has been hired.
+     * @param p        The Person to be hired as an instructor.
+     * @param salary   The salary per hour for the instructor.
+     * @param sessions A list of SessionTypes the instructor is qualified to teach.
+     * @return A newly hired Instructor object.
      */
     public Instructor hireInstructor(Person p, int salary, ArrayList<SessionType> sessions) {
         if (p == null || sessions.isEmpty()) {
@@ -85,12 +100,12 @@ public class Secretary extends Person {
 
 
     /**
-     * This method is used to register a client to a lesson
+     * Registers a client to a lesson if all criteria are met.
      *
-     * @param client         - the client that we are registering
-     * @param currentSession - the session that we are registering the client to
-     * @throws DuplicateClientException     - if the client is already registered
-     * @throws ClientNotRegisteredException - if the client is not registered
+     * @param client         The Client to register.
+     * @param currentSession The Session the client will be registered to.
+     * @throws DuplicateClientException     If the client is already registered for the session.
+     * @throws ClientNotRegisteredException If the client is not registered in the gym system.
      */
     public void registerClientToLesson(Client client, Session currentSession) throws DuplicateClientException, ClientNotRegisteredException {
         boolean errorFlag = false;
@@ -139,22 +154,39 @@ public class Secretary extends Person {
         }
     }
 
-
+    /**
+     * Sends a notification related to a session.
+     *
+     * @param session The Session associated with the notification.
+     * @param message The notification message.
+     */
     public void notify(Session session, String message) {
         notificationService.notify(session,message);
     }
 
+    /**
+     * Sends a notification for a specific date.
+     *
+     * @param date          The date of the notification.
+     * @param warningMessage The message to be sent.
+     */
     public void notify(String date, String warningMessage) {
         notificationService.notify(date,warningMessage);
 
     }
-
+    /**
+     * Sends a generic notification.
+     *
+     * @param message The notification message.
+     */
     public void notify(String message) {
         notificationService.notify(message);
     }
 
+    /**
+     * Pays salaries to the secretary and all instructors for their sessions.
+     */
     public void paySalaries() {
-//         secretary payment
         this.addToBalance(this.salary);
         gym.addBalance(-this.salary);
         List<Session> allSessions = gym.getSessions();
@@ -165,6 +197,9 @@ public class Secretary extends Person {
         gym.addHistoryLog("Salaries have been paid to all employees");
     }
 
+    /**
+     * Prints all historical actions and logs.
+     */
     public void printActions() {
         List<String> actionsLog = gym.getHistoryLog();
         for (String str : actionsLog) {
