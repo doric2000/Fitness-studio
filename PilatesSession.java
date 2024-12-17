@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class PilatesSession implements SessionInterface{
+public class PilatesSession implements Session{
     private final int PRICE = 60;
     private final int MAX_PARTICIPANTS= 30;
     private SessionType sType;

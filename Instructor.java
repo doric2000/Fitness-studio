@@ -3,14 +3,13 @@ import java.util.ArrayList;
 public class Instructor extends Person {
     private ArrayList <SessionType> qualifiedSessions;
     private int salaryPerHour;
-    private Person person;
+
 
 
     public Instructor(Person p, int salaryPerHour, ArrayList<SessionType> Sessions) {
         super(p);
         this.salaryPerHour = salaryPerHour;
         this.qualifiedSessions = Sessions;
-        this.person = p;
     }
 
     public Instructor(Instructor instructor){
@@ -25,11 +24,6 @@ public class Instructor extends Person {
 
     public void payInstructor(){
         this.addToBalance(salaryPerHour);
-    }
-
-    public Person getPerson()
-    {
-        return this.person;
     }
 
     public int getSalaryPerHour() {

@@ -5,19 +5,14 @@ import java.util.List;
 
 public class Client extends Person implements Observer {
     private List<String> messageInbox;
-    private Person person;
 
 
 
     public Client(Person person) {
         super(person);
-        this.person = person;
         messageInbox = new ArrayList<>();
     }
-    public Person getPerson()
-    {
-        return this.person;
-    }
+
 
     public StringBuilder getNotifications() {
         StringBuilder allMessages= new StringBuilder();

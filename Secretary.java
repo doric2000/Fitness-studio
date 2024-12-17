@@ -12,28 +12,16 @@ public class Secretary extends Person {
     private Person person;
     private NotificationService notificationService;
 
+    private SessionFactory sessionFactory;
+
     public Secretary(Person p, int salary) {
         super(p);
         this.person=p;
         this.salary = salary;
         this.gym = Gym.getInstance();
         this.notificationService = new NotificationService(this.gym);
+        this.sessionFactory = new SessionFactory();
         gym.addHistoryLog("A new secretary has started working at the gym: " + p.getName());
-    }
-
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public Person getPerson()
-    {
-        return this.person;
-    }
-
-    protected void setSalary(int newSalary) {
-
-        this.salary = newSalary;
     }
 
     /**
@@ -171,7 +159,7 @@ public class Secretary extends Person {
         gym.addBalance(-this.salary);
         List<Session> allSessions = gym.getSessions();
         for (Session s : allSessions) {
-            s.getInstructor().getPerson().addToBalance(s.getInstructor().getSalaryPerHour());
+            s.getInstructor().addToBalance(s.getInstructor().getSalaryPerHour());
             gym.addBalance(-s.getInstructor().getSalaryPerHour());
         }
         gym.addHistoryLog("Salaries have been paid to all employees");
@@ -202,7 +190,7 @@ public class Secretary extends Person {
         gym.addHistoryLog("Created new session: " + sessionToCheck.name() + " on " + dateNHour2 + " with instructor: " + instructor.getName());
         // here we will have to implement our Factory
 
-        Session newSession = new Session(sessionToCheck, dateNHour, forumType, instructor);
+        Session newSession = sessionFactory.createSession(sessionToCheck,dateNHour,forumType,instructor);
         gym.getSessions().add(newSession);
         return newSession;
     }

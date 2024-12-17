@@ -1,9 +1,8 @@
+/*
 import java.util.ArrayList;
 import java.util.List;
 
-public class NinjaSession implements Session{
-    private final int PRICE = 150;
-    private final int MAX_PARTICIPANTS = 5;
+public class Session {
     private SessionType sType;
     private String date;
     private ForumType fType;
@@ -12,8 +11,8 @@ public class NinjaSession implements Session{
     private ForumTypeStrategy fTypeStrategy;
     private List<Observer> observers;
 
-    public NinjaSession(String date, ForumType fType, Instructor instructor) {
-        this.sType=SessionType.Ninja;
+    public Session(SessionType sType, String date, ForumType fType, Instructor instructor) {
+        this.sType = sType;
         this.date = date;
         this.fType = fType;
         this.instructor = instructor;
@@ -22,13 +21,21 @@ public class NinjaSession implements Session{
         observers  = new ArrayList<>();
     }
 
+*/
+/*    public Session(Session session){
+        this.sType = session.sType;
+        this.date = session.date;
+        this.fType =  session.fType;
+        this.instructor = session.instructor;
+    }*//*
+
 
     public String getForumTypeString(){
         return fType.name();
     }
 
     public int getPrice(){
-        return PRICE;
+        return sType.getPrice();
     }
 
     public Instructor getInstructor(){
@@ -64,12 +71,12 @@ public class NinjaSession implements Session{
 
     // check if the session has enough place to register a new client
     public boolean hasPlace() {
-        return (MAX_PARTICIPANTS > registeredClients.size());
+        return (this.sType.getMaxParticipants() > registeredClients.size());
     }
 
     // check if the client has enough balance after subtracting the price of the session
     public boolean hasBalance(Client client) {
-        return (client.getBalance() - PRICE > 0);
+        return (client.getBalance() - sType.getPrice() > 0);
     }
 
     // check if the client is in the right forum
@@ -78,7 +85,7 @@ public class NinjaSession implements Session{
     }
     public boolean isForumTypeGender()
     {
-        return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
+       return (fType.equals(ForumType.Male) || fType.equals(ForumType.Female));
     }
 
     public void registerObserver (Observer o) {
@@ -99,10 +106,9 @@ public class NinjaSession implements Session{
 
     @Override
     public String toString() {
-        return "Session Type: " + this.sType.name() +" | Date: " + this.date + " | Forum: " + this.fType.name() + " | Instructor: " + this.instructor.getName() + " | Participants: " + this.registeredClients.size() + "/" + MAX_PARTICIPANTS;
+        return "Session Type: " + this.sType.name() +" | Date: " + this.date + " | Forum: " + this.fType.name() + " | Instructor: " + this.instructor.getName() + " | Participants: " + this.registeredClients.size() + "/" + this.sType.getMaxParticipants();
 
     }
-
-
 }
 
+*/

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class ThaiBoxingSession implements SessionInterface{
+public class ThaiBoxingSession implements Session{
     private final int PRICE = 100;
     private final int MAX_PARTICIPANTS = 20;
     private SessionType sType;
