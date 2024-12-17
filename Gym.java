@@ -1,17 +1,21 @@
 import java.util.ArrayList;
 import java.util.List;
-
+//Our singleton class
 public class Gym {
-    String gymName; // the Name of our gym
-    Secretary secretary; // Gym's secretary
-    private static Gym instance; // Working with the Singleton principle to make sure that we have only one instance.
-    private List<Client> clients; // A list of the gym clients.
-    private List<Instructor> instructors;
-    private int balance; // gym balance , will be initialized to 0. The secretary salary will not affect the balance.
-    private List<String> historyLog;
+    private String gymName; // The name of the gym
+    private Secretary secretary; // The gym's secretary
+    private static Gym instance; // Singleton instance of the gym
+    private List<Client> clients; // List of the gym's clients
+    private List<Instructor> instructors; // List of the gym's instructors
+    private int balance; // The gym's financial balance
+    private List<String> historyLog; // Log of significant gym actions and events
+    private List<Session> sessions; // List of all sessions held at the gym
 
-    private List<Session> sessions;
-
+    /**
+     * Private constructor to prevent direct instantiation.
+     * Initializes empty lists for clients, instructors, sessions, and history logs,
+     * and sets the gym balance to zero.
+     */
     private Gym() {
         clients = new ArrayList<>();
         instructors = new ArrayList<>();
@@ -20,86 +24,147 @@ public class Gym {
         sessions = new ArrayList<>();
     }
 
-    public void addBalance(int money) {
-        balance += money;
-    }
-
-    public List<Session> getSessions()
-    {
-        return sessions;
-    }
-
+    /**
+     * Retrieves the singleton instance of the Gym class.
+     * Creates a new instance if it does not already exist.
+     *
+     * @return The single instance of the Gym.
+     */
     public static Gym getInstance() {
         if (instance == null) {
             instance = new Gym();
         }
         return instance;
     }
+
+    /**
+     * Sets the name of the gym.
+     *
+     * @param nameOfGym The name to assign to the gym.
+     */
     public void setName(String nameOfGym) {
-        this.gymName=nameOfGym;
+        this.gymName = nameOfGym;
     }
 
+    /**
+     * Assigns a secretary to the gym.
+     * If a secretary already exists, they are unassigned before the new one is set.
+     *
+     * @param person The Person object representing the new secretary.
+     * @param salary The salary for the new secretary.
+     */
     public void setSecretary(Person person, int salary) {
         if (this.secretary != null) {
             this.secretary.gym = null;
         }
-        secretary = new Secretary(person,salary);
+        secretary = new Secretary(person, salary);
     }
 
-    public void addHistoryLog(String text){
+    /**
+     * Adds a specified amount to the gym's financial balance.
+     *
+     * @param money The amount to add to the balance.
+     */
+    public void addBalance(int money) {
+        balance += money;
+    }
+
+    /**
+     * Logs an action or event into the gym's history log.
+     *
+     * @param text The text to add to the history log.
+     */
+    public void addHistoryLog(String text) {
         historyLog.add(text);
     }
 
-    public List<String> getHistoryLog(){
+    /**
+     * Retrieves the gym's session list.
+     *
+     * @return A list of sessions held at the gym.
+     */
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    /**
+     * Retrieves the gym's history log.
+     *
+     * @return A list of strings representing historical actions or events.
+     */
+    public List<String> getHistoryLog() {
         return historyLog;
     }
 
+    /**
+     * Retrieves the gym's secretary.
+     *
+     * @return The Secretary assigned to the gym.
+     */
     public Secretary getSecretary() {
         return this.secretary;
     }
 
+    /**
+     * Retrieves a list of all clients registered with the gym.
+     *
+     * @return A list of Client objects.
+     */
     public List<Client> getClients() {
         return clients;
     }
-    public List<Instructor> getInstructors(){return  instructors;}
 
-    private List<Person> getEmployees(){
+    /**
+     * Retrieves a list of all instructors working at the gym.
+     *
+     * @return A list of Instructor objects.
+     */
+    public List<Instructor> getInstructors() {
+        return instructors;
+    }
+
+    /**
+     * Retrieves a list of all employees in the gym, including instructors and the secretary.
+     *
+     * @return A list of Person objects representing gym employees.
+     */
+    private List<Person> getEmployees() {
         List<Person> employees = new ArrayList<>(instructors);
         employees.add(getSecretary());
         return employees;
     }
 
+    /**
+     * Returns a string representation of the gym's details, including the name, secretary,
+     * financial balance, clients, employees, and session data.
+     *
+     * @return A formatted string with all gym details.
+     */
     @Override
     public String toString() {
-        StringBuilder all= new StringBuilder();
-        all.append("Gym Name: " + this.gymName + "\n");
-        all.append("Gym Secretary: " + this.secretary.toString() + "\n");
-        all.append("Gym Balance: " + this.balance + "\n");
-        all.append("\n");
-        all.append("Clients Data:" + "\n");
-        for (int i = 0; i < this.clients.size(); i++) {
-            all.append(clients.get(i).toString()).append("\n");
+        StringBuilder all = new StringBuilder();
+        all.append("Gym Name: ").append(this.gymName).append("\n");
+        all.append("Gym Secretary: ").append(this.secretary.toString()).append("\n");
+        all.append("Gym Balance: ").append(this.balance).append("\n\n");
+
+        all.append("Clients Data:\n");
+        for (Client client : this.clients) {
+            all.append(client.toString()).append("\n");
         }
-        all.append("\n");
-        all.append("Employees Data:" + "\n");
-        for (int i = 0; i < this.getEmployees().size(); i++) {
-            all.append(getEmployees().get(i).toString()).append("\n");
+
+        all.append("\nEmployees Data:\n");
+        for (Person employee : this.getEmployees()) {
+            all.append(employee.toString()).append("\n");
         }
-        all.append("\n");
-        all.append("Sessions Data:" + "\n");
+
+        all.append("\nSessions Data:\n");
         for (int i = 0; i < this.sessions.size(); i++) {
-            if (i == this.sessions.size()-1 )
+            if (i == this.sessions.size() - 1) {
                 all.append(sessions.get(i).toString());
-            else {
+            } else {
                 all.append(sessions.get(i).toString()).append("\n");
             }
-
         }
-
-
-
         return all.toString();
     }
-
-
 }

@@ -6,18 +6,31 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-
+/**
+ * The CurrentDate class provides utility methods for working with dates and times,
+ * including formatting, date validation, and age calculation.
+ * We made all the methods to be static because the usage is always the same
+ * And it doesn't matter who wants the info.
+ */
 public class CurrentDate {
 
-
-    // Returns the current date in the format dd-MM-yyyy HH:mm
+    /**
+     * Retrieves the current date and time formatted as "dd-MM-yyyy HH:mm".
+     *
+     * @return A string representing the current date and time.
+     */
     public static String getCurrentDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date date = new Date();
         return formatter.format(date);
     }
 
-    // Returns true if the date1 is before the current date
+    /**
+     * Checks if a given date (in "dd-MM-yyyy HH:mm" format) is before the current date and time.
+     *
+     * @param date1 The date string to check.
+     * @return True if the given date is before the current date, false otherwise.
+     */
     public static boolean isExpiredDate(String date1) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         try {
@@ -30,58 +43,48 @@ public class CurrentDate {
         }
     }
 
+    /**
+     * Converts a date string from "dd-MM-yyyy HH:mm" format to "yyyy-MM-dd HH:mm" format.
+     *
+     * @param date The input date string in "dd-MM-yyyy HH:mm" format.
+     * @return The date string formatted as "yyyy-MM-dd HH:mm".
+     */
     public static String YearMonthDateHHmm(String date) {
-
-        // Define the input format
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-
-        // Define the output format
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-        // Parse the input date
         LocalDateTime dateTime = LocalDateTime.parse(date, inputFormatter);
-
-        // Format the date into the desired output format
-
         return dateTime.format(outputFormatter);
     }
 
+    /**
+     * Converts a date string from "dd-MM-yyyy" format to "yyyy-MM-dd" format.
+     *
+     * @param date The input date string in "dd-MM-yyyy" format.
+     * @return The formatted date string as "yyyy-MM-dd", or null if the input format is invalid.
+     */
     public static String ReturnDateReversedNohour(String date) {
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy");
-
-            // Define the desired output date format
             SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-            // Parse the input date string into a Date object
             Date newdate = inputFormat.parse(date);
-
-            // Format the Date object into the desired output format
             return outputFormat.format(newdate);
         } catch (ParseException e) {
-            // Handle error if the input date format is invalid
             System.err.println("Invalid date format: " + date);
             return null;
         }
     }
 
-    public static int getAge(String date){
-        // Define the date format
+    /**
+     * Calculates the age based on a given birth date in "dd-MM-yyyy" format.
+     *
+     * @param date The birth date string in "dd-MM-yyyy" format.
+     * @return The calculated age as an integer.
+     */
+    public static int getAge(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        // Parse the birthdate string into a LocalDate
         LocalDate birthDate = LocalDate.parse(date, formatter);
-
-        // Get today's date
         LocalDate today = LocalDate.now();
-        // Calculate the age as a Period
         Period age = Period.between(birthDate, today);
-
-        // Calculate the age
         return age.getYears();
     }
-
-
-
-
 }
